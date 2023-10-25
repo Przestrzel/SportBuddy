@@ -1,18 +1,26 @@
-import {
-  createBrowserRouter,
-  RouterProvider as ReactRouterProvider,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/auth/login/LoginPage";
+import Layout from "../components/layout/Layout";
+import NotFound from "../components/common/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: <Layout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+    ],
   },
 ]);
 
-function RouterProvider() {
-  return <ReactRouterProvider router={router} />;
+function AppRouterProvider() {
+  return (
+    <RouterProvider router={router} fallbackElement={<div>Loading</div>} />
+  );
 }
 
-export default RouterProvider;
+export default AppRouterProvider;

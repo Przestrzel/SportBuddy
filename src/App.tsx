@@ -1,7 +1,8 @@
 import "./index.css";
+import RouterProvider from "./providers/RouterProvider";
 
 function App() {
-  return <h1>Hello world!</h1>;
+  return <RouterProvider />;
 }
 
 export default App;

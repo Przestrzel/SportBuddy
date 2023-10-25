@@ -1,9 +1,11 @@
-interface Props {
-  children: React.ReactNode;
-}
+import { Outlet } from "react-router-dom";
 
-function Layout({ children }: Props) {
-  return <main className="width-100">{children}</main>;
+function Layout() {
+  return (
+    <main className="w-screen h-screen bg-gray-200 px-24">
+      <Outlet />
+    </main>
+  );
 }
 
 export default Layout;

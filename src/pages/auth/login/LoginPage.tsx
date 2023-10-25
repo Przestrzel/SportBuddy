@@ -1,8 +1,17 @@
+import Card from "../../../components/common/Card/Card";
+import Header from "../../../components/typography/Header/Header";
+
 function LoginPage() {
   return (
-    <div className="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">
-      This is login page
-    </div>
+    <section className="container w-full h-full flex">
+      <div className="m-auto w-1/3 h-1/2">
+        <Card>
+          <form className="w-full max-w-lg">
+            <Header>Login</Header>
+          </form>
+        </Card>
+      </div>
+    </section>
   );
 }
 
