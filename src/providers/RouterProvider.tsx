@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/auth/login/LoginPage";
 import Layout from "../components/layout/Layout";
 import routes from "../config/routes";
-import SignUpPage from "../pages/auth/signUp/signUpPage";
+import SignUpPage from "../pages/auth/signUp/SignUpPage";
 
 function AppRouterProvider() {
   return (

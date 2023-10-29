@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +7,7 @@ import Button from "../../../../components/common/Button/Button";
 import { ILogin } from "../../types/auth.types";
 import loginSchema from "../../validators/auth.validators";
 import routes from "../../../../config/routes";
+import Link from "../../../../components/common/Link/Link";
 
 function LoginForm() {
   const {
@@ -57,9 +57,7 @@ function LoginForm() {
         )}
       />
       <div className="flex justify-between mt-4">
-        <Button buttonType="link">
-          <Link to={routes.signUp}>Create an account</Link>
-        </Button>
+        <Link to={routes.signUp}>Don`t have an account?</Link>
         <Button disabled={!isValid} type="submit" onClick={() => null}>
           Sign in
         </Button>
