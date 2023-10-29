@@ -1,13 +1,12 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Label from "../../../../components/common/Label/Label";
-import Input from "../../../../components/common/Input/Input";
 import Button from "../../../../components/common/Button/Button";
 import { ILogin } from "../../types/auth.types";
-import loginSchema from "../../validators/auth.validators";
 import routes from "../../../../config/routes";
 import Link from "../../../../components/common/Link/Link";
+import { loginSchema } from "../../validators/auth.validators";
+import ControlledInput from "../../../../components/common/ControlledInput/ControlledInput";
 
 function LoginForm() {
   const {
@@ -23,42 +22,29 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
-      <Controller
-        control={control}
-        name="email"
-        render={({ field: { value, onChange } }) => (
-          <>
-            <Label htmlFor="e-mail">E-mail</Label>
-            <Input
-              value={value}
-              onChange={onChange}
-              id="e-mail"
-              type="text"
-              placeholder="John"
-              className="mb-4"
-            />
-          </>
-        )}
-      />
-      <Controller
-        control={control}
-        name="password"
-        render={({ field: { value, onChange } }) => (
-          <>
-            <Label htmlFor="password">Password</Label>
-            <Input
-              value={value}
-              onChange={onChange}
-              id="password"
-              type="password"
-            />
-          </>
-        )}
-      />
-      <div className="flex justify-between mt-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-lg flex flex-col gap-2"
+    >
+      <div>
+        <ControlledInput
+          control={control}
+          name="email"
+          type="text"
+          label="E-mail"
+        />
+      </div>
+      <div>
+        <ControlledInput
+          control={control}
+          name="password"
+          type="password"
+          label="Password"
+        />
+      </div>
+      <div className="flex justify-between mt-2">
         <Link to={routes.signUp}>Don`t have an account?</Link>
-        <Button disabled={!isValid} type="submit" onClick={() => null}>
+        <Button disabled={!isValid} type="submit">
           Sign in
         </Button>
       </div>
