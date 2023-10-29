@@ -7,6 +7,7 @@ import Input from "../../../../components/common/Input/Input";
 import Button from "../../../../components/common/Button/Button";
 import { ILogin } from "../../types/auth.types";
 import loginSchema from "../../validators/auth.validators";
+import routes from "../../../../config/routes";
 
 function LoginForm() {
   const {
@@ -57,7 +58,7 @@ function LoginForm() {
       />
       <div className="flex justify-between mt-4">
         <Button buttonType="link">
-          <Link to="/register">Create an account</Link>
+          <Link to={routes.signUp}>Create an account</Link>
         </Button>
         <Button disabled={!isValid} type="submit" onClick={() => null}>
           Sign in

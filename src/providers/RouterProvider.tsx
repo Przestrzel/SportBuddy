@@ -1,25 +1,20 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/auth/login/LoginPage";
 import Layout from "../components/layout/Layout";
-import NotFound from "../pages/errors/NotFound/NotFound";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-    ],
-  },
-]);
+import routes from "../config/routes";
+import SignUpPage from "../pages/auth/signUp/signUpPage";
 
 function AppRouterProvider() {
   return (
-    <RouterProvider router={router} fallbackElement={<div>Loading</div>} />
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path={routes.login} element={<LoginPage />} />
+          <Route path={routes.signUp} element={<SignUpPage />} />
+          <Route path="*" element={<Navigate to={routes.login} />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

@@ -1,4 +1,5 @@
 export default {
-  login: "/login",
-  home: "/home",
+  login: "/auth/login",
+  signUp: "/auth/sign-up",
+  home: "/app/home",
 };
