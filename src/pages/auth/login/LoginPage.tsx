@@ -7,7 +7,7 @@ function LoginPage() {
   return (
     <section className="container w-full h-full flex">
       <div className="m-auto w-1/3 h-1/2">
-        <Card>
+        <Card className="max-w-sm">
           <div className="container w-full border-b border-gray-300 pb-6 mb-6">
             <NamedLogo />
           </div>
