@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
-    port: 5173, // This is the port which we will use in docker
+    port: 5173, // Docker compatibility port
     watch: {
       usePolling: true
     }
