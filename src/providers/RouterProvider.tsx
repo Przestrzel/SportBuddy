@@ -19,6 +19,7 @@ function PrivateRoutes() {
   return (
     <Routes>
       <Route path={routes.home} element={<div>Home</div>} />
+      <Route path={routes.groups} element={<div>Groups</div>} />
       <Route path="*" element={<Navigate to={routes.home} />} />
     </Routes>
   );
