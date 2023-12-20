@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import routes from "../../../config/routes";
 import Button from "../../common/Button/Button";
 import { logout } from "../../../pages/auth/store/auth.slice";
+import useAnimation from "../../../hooks/useAnimation";
 
 function ListLink({ to, children }: { children: React.ReactNode; to: string }) {
   return (
@@ -14,13 +16,19 @@ function ListLink({ to, children }: { children: React.ReactNode; to: string }) {
 
 function Navigation() {
   const dispatch = useDispatch();
+  const { initial, animate, transition } = useAnimation({ mode: "normal" });
 
   const onLogout = () => {
     dispatch(logout());
   };
 
   return (
-    <nav className="w-screen h-16">
+    <motion.nav
+      initial={initial}
+      animate={animate}
+      transition={transition}
+      className="w-screen h-16"
+    >
       <ul className="flex justify-start gap-8 items-center h-full px-24">
         <ListLink to={routes.home}>Home</ListLink>
         <ListLink to={routes.groups}>Groups</ListLink>
@@ -28,7 +36,7 @@ function Navigation() {
           <Button onClick={onLogout}>Sign out</Button>
         </li>
       </ul>
-    </nav>
+    </motion.nav>
   );
 }
 
