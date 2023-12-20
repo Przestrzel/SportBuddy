@@ -20,7 +20,7 @@ function Button({
   disabled,
   className,
 }: Props) {
-  const { initial, animate, transition } = useAnimation({ type: "fast" });
+  const { initial, animate, transition } = useAnimation({ mode: "fast" });
   const buttonStyle = {
     primary:
       "text-white font-semibold shadow-sm bg-indigo-600 hover:shadow-md hover:bg-indigo-500 focus-visible:outline-indigo-600",
