@@ -27,9 +27,9 @@ function Navigation() {
       initial={initial}
       animate={animate}
       transition={transition}
-      className="w-screen h-16"
+      className="w-screen bg-slate-100 shadow-sm fixed top-0 left-0"
     >
-      <ul className="flex justify-start gap-8 items-center h-full px-24">
+      <ul className="flex justify-start gap-8 items-center h-16 px-24">
         <ListLink to={routes.home}>Home</ListLink>
         <ListLink to={routes.groups}>Groups</ListLink>
         <li className="ml-auto">
