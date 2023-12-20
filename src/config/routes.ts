@@ -1,5 +1,6 @@
 export default {
-  login: "/auth/login",
-  signUp: "/auth/sign-up",
-  home: "/app/home",
+  login: "/login",
+  signUp: "/sign-up",
+  home: "/home",
+  groups: "/groups",
 } as const;

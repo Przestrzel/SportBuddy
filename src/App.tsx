@@ -1,8 +1,13 @@
 import "./index.css";
 import RouterProvider from "./providers/RouterProvider";
+import StoreProvider from "./providers/StoreProvider";
 
 function App() {
-  return <RouterProvider />;
+  return (
+    <StoreProvider>
+      <RouterProvider />
+    </StoreProvider>
+  );
 }
 
 export default App;

@@ -1,11 +1,20 @@
 import { Toaster } from "react-hot-toast";
+import Navigation from "./navigation/Navigation";
 
-function Layout({ children }: { children: React.ReactNode }) {
+interface Props {
+  children: React.ReactNode;
+  isLogged: boolean;
+}
+
+function Layout({ children, isLogged }: Props) {
   return (
-    <main className="w-screen h-screen bg-gray-200 px-24">
-      {children}
-      <Toaster position="bottom-left" reverseOrder={false} />
-    </main>
+    <>
+      {isLogged ? <Navigation /> : null}
+      <main className="w-screen h-screen bg-gray-200 px-24">
+        {children}
+        <Toaster position="bottom-left" reverseOrder={false} />
+      </main>
+    </>
   );
 }
 
