@@ -1,4 +1,5 @@
 import React from "react";
+import { PiPlusCircleFill } from "react-icons/pi";
 import Button from "../../../components/common/Button/Button";
 import Search from "../../../components/common/Search/Search";
 import CreateGroupModal from "../CreateGroupModal/CreateGroupModal";
@@ -13,9 +14,10 @@ function GroupHeader() {
         <Button
           onClick={() => setModalOpen(true)}
           buttonType="link"
-          className="text-indigo-700"
+          className="text-indigo-700 flex items-center justify-center gap-2"
         >
-          Create group
+          <PiPlusCircleFill className="w-6 h-6 fill-blue-550" />
+          <span className="text-700">Create group</span>
         </Button>
       </div>
       <CreateGroupModal open={modalOpen} setOpen={setModalOpen} />
