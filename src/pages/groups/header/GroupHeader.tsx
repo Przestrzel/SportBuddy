@@ -14,10 +14,10 @@ function GroupHeader() {
         <Button
           onClick={() => setModalOpen(true)}
           buttonType="link"
-          className="text-indigo-700 flex items-center justify-center gap-2"
+          className="text-blue-700 flex items-center justify-center gap-2"
         >
           <PlusFilled className="w-6 h-6 fill-blue-550" />
-          <span className="text-700">Create group</span>
+          Create group
         </Button>
       </div>
       <CreateGroupModal open={modalOpen} setOpen={setModalOpen} />
