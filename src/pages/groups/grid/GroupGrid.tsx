@@ -11,18 +11,16 @@ function GroupGrid({ groups }: Props) {
   const { initial, animate, transition } = useAnimation({ mode: "fast" });
 
   return (
-    <motion.div
+    <motion.ul
       initial={initial}
       animate={animate}
       transition={transition}
-      className="p-12 pt-4 w-full h-full"
+      className="grid grid-cols-3 gap-8"
     >
-      <motion.ul className="grid grid-cols-3 gap-8">
-        {groups.map((group) => (
-          <GroupItem key={group.id} group={group} />
-        ))}
-      </motion.ul>
-    </motion.div>
+      {groups.map((group) => (
+        <GroupItem key={group.id} group={group} />
+      ))}
+    </motion.ul>
   );
 }
 
