@@ -2,10 +2,10 @@ import PageContainer from "../../../components/common/PageContainer/PageContaine
 import GroupGrid from "../grid/GroupGrid";
 import { Group } from "../types/groups.types";
 
-const groups: Group[] = Array.from({ length: 25 }, (_, i) => ({
+const groups: Group[] = Array.from({ length: 10 }, (_, i) => ({
   id: i,
   name: `Group ${i}`,
-  description: `Group ${i} description`,
+  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc.`,
 }));
 
 function GroupPage() {

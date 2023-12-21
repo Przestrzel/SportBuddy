@@ -5,6 +5,7 @@ import routes from "../config/routes";
 import SignUpPage from "../pages/auth/signUp/SignUpPage";
 import { useAppSelector } from "../store/store";
 import GroupPage from "../pages/groups/page/GroupPage";
+import GroupDetailPage from "../pages/groups/detail/page/GroupDetailPage";
 
 function PublicRoutes() {
   return (
@@ -20,7 +21,10 @@ function PrivateRoutes() {
   return (
     <Routes>
       <Route path={routes.home} element={<div>Home</div>} />
-      <Route path={routes.groups} element={<GroupPage />} />
+      <Route path={routes.groups}>
+        <Route path="" element={<GroupPage />} />
+        <Route path=":id" element={<GroupDetailPage />} />
+      </Route>
       <Route path="*" element={<Navigate to={routes.home} />} />
     </Routes>
   );
