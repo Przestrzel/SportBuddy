@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import useAnimation from "../../../hooks/useAnimation";
+
 type InputTypes = React.InputHTMLAttributes<HTMLInputElement>;
 
 type Props = {
@@ -5,19 +8,24 @@ type Props = {
   id: InputTypes["id"];
   onChange?: InputTypes["onChange"];
   placeholder?: InputTypes["placeholder"];
-  type: InputTypes["type"];
+  type: InputTypes["type"] | "text-area";
   value?: InputTypes["value"];
 };
 
 function Input({ className, id, type, placeholder, onChange, value }: Props) {
+  const { initial, animate, transition } = useAnimation({ mode: "fast" });
+
   return (
-    <input
+    <motion.input
+      initial={initial}
+      animate={animate}
+      transition={transition}
       type={type}
       id={id}
       onChange={onChange}
       value={value}
       placeholder={placeholder}
-      className={`block w-full rounded-md border-0 py-1.5 pl-4 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all ${className}`}
+      className={`block w-full rounded-md border-0 py-1.5 pl-4 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 ${className}`}
     />
   );
 }

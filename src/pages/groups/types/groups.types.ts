@@ -3,3 +3,5 @@ export interface Group {
   id: number;
   name: string;
 }
+
+export type CreateGroupForm = Omit<Group, "id">;
