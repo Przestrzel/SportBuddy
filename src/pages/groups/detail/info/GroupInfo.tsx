@@ -1,3 +1,4 @@
+import Header from "../../../../components/typography/Header/Header";
 import { Group } from "../../types/groups.types";
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 function GroupInfo({ group }: Props) {
   return (
     <div>
-      <h3 className="text-slate-800">{group.name}</h3>
+      <Header>{group.name}</Header>
       <p className="text-gray-500">{group.description}</p>
     </div>
   );

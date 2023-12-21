@@ -9,7 +9,9 @@ function LoginPage() {
       <div className="container w-full border-b border-gray-300 pb-6 mb-6">
         <NamedLogo />
       </div>
-      <Header className="text-center mb-4">Sign in</Header>
+      <Header size="3xl" className="text-center mb-4">
+        Sign in
+      </Header>
       <LoginForm />
     </AuthPageContainer>
   );
