@@ -12,7 +12,6 @@ import Logout from "../../../assets/icons/Logout";
 function ListLink({ to, children }: { children: React.ReactNode; to: string }) {
   const { pathname } = useLocation();
   const active = pathname.includes(to);
-  console.log(to, active);
 
   return (
     <Link className="group" to={to}>
