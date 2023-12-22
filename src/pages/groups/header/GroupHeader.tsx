@@ -13,11 +13,11 @@ function GroupHeader() {
         <Search className="max-w-lg" />
         <Button
           onClick={() => setModalOpen(true)}
-          buttonType="link"
-          className="text-blue-700 flex items-center justify-center gap-2"
+          buttonType="tertiary"
+          className="flex items-center justify-center gap-2"
         >
-          <PlusFilled className="w-6 h-6 fill-blue-550" />
-          Create group
+          <PlusFilled className="w-6 h-6" />
+          Create Group
         </Button>
       </div>
       <CreateGroupModal open={modalOpen} setOpen={setModalOpen} />

@@ -27,8 +27,8 @@ function GroupDetailPage() {
             <Header size="md" className="flex justify-between items-center">
               Upcoming Events
               <Button
-                buttonType="link"
-                className="flex justify-center items-center gap-2 text-blue-700"
+                buttonType="tertiary"
+                className="flex justify-center items-center gap-2"
               >
                 <PlusFilled className="w-6 h-6" />
                 Create Event
