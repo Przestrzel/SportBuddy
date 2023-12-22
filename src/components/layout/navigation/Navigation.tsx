@@ -11,13 +11,14 @@ import Logout from "../../../assets/icons/Logout";
 
 function ListLink({ to, children }: { children: React.ReactNode; to: string }) {
   const { pathname } = useLocation();
-  const active = pathname === to;
+  const active = pathname.includes(to);
+  console.log(to, active);
 
   return (
     <Link className="group" to={to}>
       <li
         className={`w-20 h-12 hover:bg-gray-200 transition-all flex items-center justify-center rounded [&>svg]:fill-stone-900 [&>svg]:w-6 [&>svg]:h-6 group-hover:[&>svg]:fill-blue-500 [&>svg]:transition-all ${
-          active ? "[&>svg]:fill-blue-600" : ""
+          active ? "[&>svg]:w-8 [&>svg]:h-8 [&>svg]:fill-blue-700" : ""
         } `}
       >
         {children}
