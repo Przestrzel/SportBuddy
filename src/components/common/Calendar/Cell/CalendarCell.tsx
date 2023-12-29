@@ -30,6 +30,7 @@ function CalendarCell({ cell, selectedDate, onClick }: Props) {
       initial={initial}
       animate={animate}
       transition={transition}
+      key={cell.date.format()}
       type="button"
       className={`flex justify-center items-center ${textStyle}
       hover:bg-gray-100 rounded-full hover:cursor-pointer w-10 h-10

@@ -27,7 +27,7 @@ function Calendar() {
         <CalendarCell
           cell={_date}
           selectedDate={selectedDate}
-          onClick={(date) => setSelectedDate(date)}
+          onClick={setSelectedDate}
         />
       )),
     [dates, selectedDate],

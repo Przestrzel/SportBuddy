@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import Chevron from "../../../../assets/icons/Chevron";
 import Button from "../../Button/Button";
+import useAnimation from "../../../../hooks/useAnimation";
 
 interface Props {
   date: dayjs.Dayjs;
@@ -8,6 +10,8 @@ interface Props {
 }
 
 function CalendarHeader({ date, setDate }: Props) {
+  const { initial, animate, transition } = useAnimation({ mode: "fast" });
+
   return (
     <div className="flex items-center justify-between">
       <Button
@@ -16,9 +20,15 @@ function CalendarHeader({ date, setDate }: Props) {
       >
         <Chevron />
       </Button>
-      <span className="text-stone-800 font-medium text-l text-center">
+      <motion.span
+        initial={initial}
+        animate={animate}
+        transition={transition}
+        key={date.format()}
+        className="text-stone-800 font-medium text-l text-center"
+      >
         {date.format("MMMM YYYY")}
-      </span>
+      </motion.span>
       <Button
         buttonType="tertiary"
         onClick={() => setDate(date.add(1, "month"))}
