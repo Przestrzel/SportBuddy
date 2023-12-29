@@ -6,7 +6,7 @@ interface Props {
   date: dayjs.Dayjs;
 }
 
-const GRID_SIZE = 5 * 7;
+const GRID_SIZE = 6 * 7;
 
 const useCalendar = ({ date }: Props) => {
   const daysInMonth = date.daysInMonth();
