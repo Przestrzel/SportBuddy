@@ -20,11 +20,11 @@ function Event({ match }: Props) {
             <div
               className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
                 match.members.length >= match.limit
-                  ? "bg-green-500"
-                  : "bg-red-500"
+                  ? "bg-red-500"
+                  : "bg-green-500"
               }`}
             >
-              {match.limit} / {match.members.length}
+              {match.members.length} / {match.limit}
             </div>
           ) : null}
         </div>

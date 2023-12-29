@@ -7,6 +7,7 @@ import { Group } from "../../types/groups.types";
 import Header from "../../../../components/typography/Header/Header";
 import Button from "../../../../components/common/Button/Button";
 import PlusFilled from "../../../../assets/icons/PlusFilled";
+import EventList from "../../events/EventList/EventList";
 
 function GroupDetailPage() {
   const { id } = useParams();
@@ -34,9 +35,11 @@ function GroupDetailPage() {
                 Create Event
               </Button>
             </Header>
+            <EventList />
           </div>
           <div className="flex-1">
             <Header size="md">Events History</Header>
+            <EventList />
           </div>
         </div>
         <div className="pl-4">Users</div>
