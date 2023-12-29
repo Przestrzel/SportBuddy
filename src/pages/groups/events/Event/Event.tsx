@@ -16,17 +16,15 @@ function Event({ match }: Props) {
       <div className="flex flex-col justify-start gap-4 w-full">
         <div className="flex justify-between items-center">
           <p className="text-sm font-medium text-stone-900">{match.name}</p>
-          {match.limit ? (
-            <div
-              className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
-                match.members.length >= match.limit
-                  ? "bg-red-500"
-                  : "bg-green-500"
-              }`}
-            >
-              {match.members.length} / {match.limit}
-            </div>
-          ) : null}
+          <div
+            className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
+              match.limit && match.members.length >= match.limit
+                ? "bg-red-500"
+                : "bg-green-500"
+            }`}
+          >
+            {match.members.length} {match.limit ? `/ ${match.limit}` : null}
+          </div>
         </div>
         <div className="flex items-center gap-4">
           <InfoContainer text={dayjs(match.date).format("MMMM DD YYYY")}>
