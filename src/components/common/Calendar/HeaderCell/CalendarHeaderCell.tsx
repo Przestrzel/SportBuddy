@@ -4,7 +4,7 @@ interface Props {
 
 function CalendarHeaderCell({ name }: Props) {
   return (
-    <div className="flex justify-center items-center border border-gray-300">
+    <div className="flex justify-center items-center text-stone-400 select-none">
       {name}
     </div>
   );
