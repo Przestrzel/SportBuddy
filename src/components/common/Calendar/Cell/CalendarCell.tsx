@@ -11,10 +11,10 @@ interface Props {
 
 function CalendarCell({ cell, selectedDate, onClick }: Props) {
   const { initial, animate, transition } = useAnimation({ mode: "fast" });
-  const nonCurrentStyle = cell.type !== "current" ? "text-gray-400" : "";
+  const nonCurrentStyle = cell.type !== "current" ? "text-stone-300" : "";
 
-  const textStyle = cell.type === "current" ? "text-stone-800" : "";
-  const todayStyle = cell.date.isSame(dayjs(), "day") ? "text-blue-500" : "";
+  const textStyle = cell.type === "current" ? "text-stone-700" : "";
+  const todayStyle = cell.date.isSame(dayjs(), "day") ? "text-blue-700" : "";
   const selectedStyle = cell.date.isSame(selectedDate, "day")
     ? "bg-blue-100"
     : "";

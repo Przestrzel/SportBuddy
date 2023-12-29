@@ -18,7 +18,7 @@ function CalendarHeader({ date, setDate }: Props) {
         buttonType="tertiary"
         onClick={() => setDate(date.subtract(1, "month"))}
       >
-        <Chevron />
+        <Chevron className="w-5 h-5" />
       </Button>
       <motion.span
         initial={initial}
@@ -33,7 +33,7 @@ function CalendarHeader({ date, setDate }: Props) {
         buttonType="tertiary"
         onClick={() => setDate(date.add(1, "month"))}
       >
-        <Chevron className="rotate-180" />
+        <Chevron className="rotate-180 w-5 h-5" />
       </Button>
     </div>
   );
