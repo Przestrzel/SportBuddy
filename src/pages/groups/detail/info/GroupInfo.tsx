@@ -1,14 +1,18 @@
+import Group from "../../../../assets/icons/Group";
 import Header from "../../../../components/typography/Header/Header";
-import { Group } from "../../types/groups.types";
+import { Group as TGroup } from "../../types/groups.types";
 
 interface Props {
-  group: Group;
+  group: TGroup;
 }
 
 function GroupInfo({ group }: Props) {
   return (
     <div>
-      <Header>{group.name}</Header>
+      <Header className="flex gap-2 items-center">
+        <Group />
+        {group.name}
+      </Header>
       <p className="text-gray-500">{group.description}</p>
     </div>
   );
