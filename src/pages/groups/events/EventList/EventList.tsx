@@ -18,6 +18,12 @@ function EventList() {
     <div className="flex flex-col gap-2">
       <Event match={match} />
       <Event match={match} />
+      <Event
+        match={{
+          ...match,
+          limit: 15,
+        }}
+      />
     </div>
   );
 }
