@@ -10,9 +10,9 @@ function EventList() {
     end: "13:00",
     location: "Test Location",
     fee: 15,
-    limit: null,
+    limit: undefined,
     members: [],
-    registrationType: "mixed",
+    category: "Football",
   };
   return (
     <div className="flex flex-col gap-2">

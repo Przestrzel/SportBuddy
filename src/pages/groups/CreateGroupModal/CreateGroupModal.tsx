@@ -42,26 +42,25 @@ function CreateGroupModal({ open, setOpen }: Props) {
       confirmDisabled={!isValid}
     >
       <div className="flex flex-col gap-4 w-full">
-        <Header size="lg" className="flex items-center justify-start gap-2">
-          <Group className="w-6 h-6 fill-slate-800" />
-          <span className="text-slate-800">Create Group</span>
+        <Header
+          size="lg"
+          className="flex items-center justify-start gap-2 text-stone-800"
+        >
+          <Group className="w-6 h-6" />
+          <span>Create Group</span>
         </Header>
-        <div>
-          <ControlledInput
-            control={control}
-            name="name"
-            type="text"
-            label="Name"
-          />
-        </div>
-        <div>
-          <ControlledInput
-            control={control}
-            name="description"
-            type="text"
-            label="Description"
-          />
-        </div>
+        <ControlledInput
+          control={control}
+          name="name"
+          type="text"
+          label="Name"
+        />
+        <ControlledInput
+          control={control}
+          name="description"
+          type="text"
+          label="Description"
+        />
       </div>
     </Modal>
   );

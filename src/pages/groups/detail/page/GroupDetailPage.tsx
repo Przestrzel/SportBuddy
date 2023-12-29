@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import React from "react";
 import PageContainer from "../../../../components/common/PageContainer/PageContainer";
 import Breadcrumbs from "../../../../components/common/Breadcrumbs/Breadcrumbs";
 import Card from "../../../../components/common/Card/Card";
@@ -8,9 +9,11 @@ import Header from "../../../../components/typography/Header/Header";
 import Button from "../../../../components/common/Button/Button";
 import PlusFilled from "../../../../assets/icons/PlusFilled";
 import EventList from "../../events/EventList/EventList";
+import CreateEventModal from "../modals/CreateEventModal";
 
 function GroupDetailPage() {
   const { id } = useParams();
+  const [open, setOpen] = React.useState(false);
 
   const group: Group = {
     id: Number(id),
@@ -30,6 +33,7 @@ function GroupDetailPage() {
               <Button
                 buttonType="tertiary"
                 className="flex justify-center items-center gap-2"
+                onClick={() => setOpen(true)}
               >
                 <PlusFilled className="w-6 h-6" />
                 Create Event
@@ -44,6 +48,7 @@ function GroupDetailPage() {
         </div>
         <div className="pl-4">Users</div>
       </Card>
+      <CreateEventModal open={open} onClose={() => setOpen(false)} />
     </PageContainer>
   );
 }

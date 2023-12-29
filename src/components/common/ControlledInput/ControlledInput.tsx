@@ -22,10 +22,10 @@ function ControlledInput<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field: { value, onChange } }) => (
-        <>
+        <div className="w-full">
           <Label htmlFor={name}>{label}</Label>
           <Input value={value} onChange={onChange} id={name} type={type} />
-        </>
+        </div>
       )}
     />
   );
