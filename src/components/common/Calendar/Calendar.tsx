@@ -42,7 +42,7 @@ function Calendar() {
       />
       <div className="self-center flex flex-col justify-start gap-8">
         <CalendarHeader date={date} setDate={setDate} />
-        <div className="grid grid-cols-7 gap-4">
+        <div className="grid grid-cols-7 gap-4 border-b">
           {headers.map((header) => (
             <CalendarHeaderCell key={header} name={header.charAt(0)} />
           ))}

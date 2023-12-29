@@ -1,21 +1,30 @@
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import { Match } from "../types/events.types";
 import Calendar from "../../../../assets/icons/Calendar";
 import LocationDot from "../../../../assets/icons/LocationDot";
 import Clock from "../../../../assets/icons/Clock";
 import MoneyBill from "../../../../assets/icons/MoneyBill";
 import InfoContainer from "./InfoContainer/InfoContainer";
+import useAnimation from "../../../../hooks/useAnimation";
 
 interface Props {
   match: Match;
 }
 
 function Event({ match }: Props) {
+  const { initial, animate, transition } = useAnimation({ mode: "normal" });
   return (
-    <div className="w-full py-2 pb-4 px-4 flex justify-between items-center select-none [&:not(:last-child)]:border-b border-gray-200">
+    <motion.div
+      initial={initial}
+      animate={animate}
+      transition={transition}
+      layout
+      className="w-full py-2 pb-4 px-4 flex justify-between items-center select-none [&:not(:last-child)]:border-b border-gray-200"
+    >
       <div className="flex flex-col justify-start gap-4 w-full">
         <div className="flex justify-between items-center">
-          <p className="text-sm font-medium text-stone-900">{match.name}</p>
+          <p className="text-base font-medium text-stone-900">{match.name}</p>
           <div
             className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
               match.limit && match.members.length >= match.limit
@@ -46,7 +55,7 @@ function Event({ match }: Props) {
       <div>
         <p className="text-sm text-stone-500" />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

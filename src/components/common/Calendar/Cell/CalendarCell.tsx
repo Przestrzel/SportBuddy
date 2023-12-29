@@ -32,9 +32,9 @@ function CalendarCell({ cell, selectedDate, onClick }: Props) {
       transition={transition}
       key={cell.date.format()}
       type="button"
-      className={`flex justify-center items-center ${textStyle}
+      className={`flex justify-center items-center ${todayStyle} ${textStyle}
       hover:bg-gray-100 rounded-full hover:cursor-pointer w-10 h-10
-      select-none transition-all ${nonCurrentStyle} ${todayStyle} ${selectedStyle}
+      select-none transition-all ${nonCurrentStyle} ${selectedStyle}
       `}
       onClick={onClickHandle}
     >
