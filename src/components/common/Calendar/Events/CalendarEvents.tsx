@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Header from "../../../typography/Header/Header";
 import Calendar from "../../../../assets/icons/Calendar";
+import EventList from "../../../../pages/groups/events/EventList/EventList";
 
 interface Props {
   className: string;
@@ -14,7 +15,7 @@ function CalendarEvents({ date, className }: Props) {
         <Calendar />
         {date.format("DD MMMM YYYY")}
       </Header>
-      Event List here
+      <EventList />
     </div>
   );
 }

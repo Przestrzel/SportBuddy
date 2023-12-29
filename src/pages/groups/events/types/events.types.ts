@@ -7,7 +7,7 @@ export interface Match {
   end: TimeT;
   fee: MoneyT;
   id: string;
-  limit: number;
+  limit: number | null;
   location: LocationT;
   members: User[];
   name: string;

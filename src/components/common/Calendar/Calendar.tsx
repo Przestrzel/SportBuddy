@@ -38,7 +38,7 @@ function Calendar() {
     <Card className="w-full h-full max-h-[600px] flex gap-16">
       <CalendarEvents
         date={selectedDate}
-        className="w-3/4 border-r border-gray-200"
+        className="w-3/4 border-r border-gray-200 pr-4"
       />
       <div className="self-center flex flex-col justify-start gap-8">
         <CalendarHeader date={date} setDate={setDate} />
