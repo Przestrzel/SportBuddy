@@ -17,5 +17,4 @@ export interface User extends ModelWithId {
   email: string;
   firstName: string;
   lastName: string;
-  phoneNumber: string;
 }

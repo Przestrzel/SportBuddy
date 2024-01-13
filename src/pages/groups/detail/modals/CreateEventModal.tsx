@@ -36,7 +36,7 @@ function CreateEventModal({ open, onClose }: Props) {
           className="flex items-center justify-start gap-2 text-stone-800"
         >
           <Calendar className="w-6 h-6" />
-          <span>Create Group</span>
+          <span>Create Event</span>
         </Header>
         <ControlledInput
           control={control}
