@@ -1,6 +1,7 @@
-export interface Group {
+import { ModelWithId } from "../../../types/common";
+
+export interface Group extends ModelWithId {
   description: string;
-  id: number;
   name: string;
 }
 

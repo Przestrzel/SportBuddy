@@ -10,7 +10,7 @@ import { Group } from "../types/groups.types";
 import useSearch from "../../../hooks/useSearch";
 
 const groups: Group[] = Array.from({ length: 5 }, (_, i) => ({
-  id: i,
+  id: i.toString(),
   name: `Group ${i}`,
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc.`,
 }));

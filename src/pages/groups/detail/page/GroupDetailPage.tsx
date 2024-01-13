@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import PageContainer from "../../../../components/common/PageContainer/PageContainer";
 import Breadcrumbs from "../../../../components/common/Breadcrumbs/Breadcrumbs";
@@ -10,13 +10,18 @@ import Button from "../../../../components/common/Button/Button";
 import PlusFilled from "../../../../assets/icons/PlusFilled";
 import EventList from "../../events/EventList/EventList";
 import CreateEventModal from "../modals/CreateEventModal";
+import routes from "../../../../config/routes";
+import UserList from "../../../auth/users/list/UserList";
 
 function GroupDetailPage() {
   const { id } = useParams();
   const [open, setOpen] = React.useState(false);
-
+  const navigate = useNavigate();
+  if (!id) {
+    return navigate(routes.groups);
+  }
   const group: Group = {
-    id: Number(id),
+    id,
     name: `Group ${id}`,
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc.`,
   };
@@ -46,7 +51,26 @@ function GroupDetailPage() {
             <EventList />
           </div>
         </div>
-        <div className="pl-4">Users</div>
+        <div className="pl-4">
+          <UserList
+            users={[
+              {
+                id: "1",
+                firstName: "John",
+                lastName: "Smith",
+                phoneNumber: "512 829 128",
+                email: "john.smith@gmail.com",
+              },
+              {
+                id: "2",
+                firstName: "John",
+                lastName: "Smith",
+                phoneNumber: "512 829 821",
+                email: "john.smith2@gmail.com",
+              },
+            ]}
+          />
+        </div>
       </Card>
       <CreateEventModal open={open} onClose={() => setOpen(false)} />
     </PageContainer>

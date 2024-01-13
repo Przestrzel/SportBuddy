@@ -1,15 +1,15 @@
+import { ModelWithId } from "../../../../types/common";
 import { DateT, LocationT, TimeT } from "../../../../types/date";
 import { MoneyT } from "../../../../types/money";
 import { User } from "../../../auth/types/auth.types";
 
 export type Category = string;
 
-export interface Match {
+export interface Match extends ModelWithId {
   category: Category;
   date: DateT;
   end: TimeT;
   fee: MoneyT | undefined;
-  id: string;
   limit: number | undefined;
   location: LocationT;
   members: User[];

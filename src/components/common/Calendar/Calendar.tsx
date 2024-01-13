@@ -26,6 +26,7 @@ function Calendar() {
     () =>
       dates.map((_date) => (
         <CalendarCell
+          key={_date.date.format("DD-MM-YYYY")}
           cell={_date}
           selectedDate={selectedDate}
           onClick={setSelectedDate}
@@ -42,7 +43,7 @@ function Calendar() {
       />
       <div className="self-center flex flex-col justify-start gap-8">
         <CalendarHeader date={date} setDate={setDate} />
-        <div className="grid grid-cols-7 gap-4 border-b">
+        <div className="grid grid-cols-7 gap-4">
           {headers.map((header) => (
             <CalendarHeaderCell key={header} name={header.charAt(0)} />
           ))}
