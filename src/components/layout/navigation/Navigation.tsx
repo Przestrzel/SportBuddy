@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import routes from "../../../config/routes";
 import Button from "../../common/Button/Button";
-import { logout } from "../../../pages/auth/store/auth.slice";
+import { logout } from "../../../store/slices/auth.slice";
 import useAnimation from "../../../hooks/useAnimation";
 import Home from "../../../assets/icons/Home";
 import Group from "../../../assets/icons/Group";

@@ -30,6 +30,7 @@
     "rules": {
         "prettier/prettier": "error",
         "import/no-extraneous-dependencies": "off",
+        "import/no-cycle": "off",
         "no-param-reassign": ["error", {
             "props": true,
             "ignorePropertyModificationsFor": [
