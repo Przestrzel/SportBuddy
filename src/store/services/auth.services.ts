@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "./utils.services";
+import { baseQuery } from "../utils/services.utils";
 
 export const authApi = createApi({
   baseQuery,
