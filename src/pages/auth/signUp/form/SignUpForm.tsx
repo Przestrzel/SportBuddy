@@ -8,6 +8,10 @@ import routes from "../../../../config/routes";
 import { IRegister } from "../../types/auth.types";
 import { registerSchema } from "../../validators/auth.validators";
 import ControlledInput from "../../../../components/common/ControlledInput/ControlledInput";
+import { useSignUpMutation } from "../../../../store/services/auth.services";
+import LoadingWrapper from "../../../../components/common/LoadingWrapper/LoadingWrapper";
+import { useAppDispatch } from "../../../../store/store";
+import { authSlice } from "../../../../store/slices/auth.slice";
 
 function SignUpForm() {
   const {
@@ -18,10 +22,22 @@ function SignUpForm() {
     resolver: yupResolver(registerSchema),
   });
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [signUp, { isLoading }] = useSignUpMutation();
 
   const onSubmit = (data: IRegister) => {
-    toast.success(`Successful registration ${data.firstName} ${data.lastName}`);
-    navigate(routes.login);
+    signUp(data)
+      .unwrap()
+      .then((res) => {
+        dispatch(authSlice.actions.setToken(res.accessToken));
+        toast.success(
+          `Successful registration ${data.firstName} ${data.lastName}`,
+        );
+        navigate(routes.login);
+      })
+      .catch(() => {
+        toast.error("Something went wrong! Try again.");
+      });
   };
 
   return (
@@ -75,9 +91,11 @@ function SignUpForm() {
       </div>
       <div className="flex justify-between mt-2">
         <Link to={routes.login}>Already have an account?</Link>
-        <Button disabled={!isValid} type="submit">
-          Sign in
-        </Button>
+        <LoadingWrapper isLoading={isLoading}>
+          <Button disabled={!isValid} type="submit">
+            Sign in
+          </Button>
+        </LoadingWrapper>
       </div>
     </form>
   );

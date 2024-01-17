@@ -1,35 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { UserWithAccessToken } from "../../pages/auth/types/auth.types";
+import { User } from "../../pages/auth/types/auth.types";
+import { RootState } from "../store";
 
 interface AuthState {
-  user: UserWithAccessToken | null;
+  token: string | null;
+  user: User | null;
 }
 
 const initialState: AuthState = {
   user: null,
+  token: null,
 };
-
-function assertUserLoggedIn(
-  user: UserWithAccessToken | null,
-): asserts user is UserWithAccessToken {
-  if (!user) {
-    throw new Error("User must be logged in");
-  }
-}
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<UserWithAccessToken>) => {
+    login: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
-    tokenReceived: (state, action: PayloadAction<UserWithAccessToken>) => {
-      assertUserLoggedIn(state.user);
-      state.user = {
-        ...state.user,
-        accessToken: action.payload.accessToken,
-      };
+    setToken: (state, action: PayloadAction<AuthState["token"]>) => {
+      state.token = action.payload;
     },
     logout: (state) => {
       state.user = null;
@@ -39,3 +30,6 @@ export const authSlice = createSlice({
 
 export const { login, logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;
+
+export const selectToken = (state: RootState) => state.auth.token;
+export const selectUser = (state: RootState) => state.auth.user;
