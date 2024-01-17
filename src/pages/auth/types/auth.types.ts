@@ -19,6 +19,8 @@ export interface User extends ModelWithId {
   lastName: string;
 }
 
-export interface UserWithAccessToken extends User {
+export interface AccessToken {
   accessToken: string;
 }
+
+export interface UserWithAccessToken extends User, AccessToken {}
