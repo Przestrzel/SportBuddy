@@ -38,7 +38,7 @@ function Modal({ open, onClose, onConfirm, confirmDisabled, children }: Props) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">{children}</div>
+                  <div>{children}</div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 flex gap-2 justify-end sm:px-6">
                   <Button onClick={onClose} buttonType="secondary">

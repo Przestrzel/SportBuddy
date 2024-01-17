@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import RouterProvider from "./providers/RouterProvider";
-import StoreProvider from "./providers/StoreProvider";
 import { useAppDispatch, useAppSelector } from "./store/store";
 import { authSlice, selectToken } from "./store/slices/auth.slice";
 import { useUserInfoMutation } from "./store/services/users.services";
@@ -29,16 +28,13 @@ function App() {
         .unwrap()
         .then((res) => {
           dispatch(authSlice.actions.login(res));
+          // TODO: Could be a problem with refresh cause probably shouldn't show welcome message.
           toast.success(`Welcome ${res.firstName} ${res.lastName}!`);
         });
     }
   }, [accessToken]);
 
-  return (
-    <StoreProvider>
-      <RouterProvider />
-    </StoreProvider>
-  );
+  return <RouterProvider />;
 }
 
 export default App;

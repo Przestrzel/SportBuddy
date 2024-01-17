@@ -8,7 +8,12 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
+  user: {
+    id: "",
+    email: "",
+    firstName: "Mark",
+    lastName: "P",
+  },
   token: null,
 };
 

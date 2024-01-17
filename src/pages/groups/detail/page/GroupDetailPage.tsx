@@ -12,10 +12,14 @@ import EventList from "../../events/EventList/EventList";
 import CreateEventModal from "../modals/CreateEventModal";
 import routes from "../../../../config/routes";
 import UserList from "../../../auth/users/list/UserList";
+import AddUsersModal from "../modals/AddUsersModal";
+import ConfirmLeaveGroupModal from "../modals/ConfirmLeaveGroupModal";
 
 function GroupDetailPage() {
   const { id } = useParams();
   const [open, setOpen] = React.useState(false);
+  const [addUsersOpen, setAddUsersOpen] = React.useState(false);
+  const [leaveGroupOpen, setLeaveGroupOpen] = React.useState(false);
   const navigate = useNavigate();
   if (!id) {
     return navigate(routes.groups);
@@ -24,6 +28,7 @@ function GroupDetailPage() {
     id,
     name: `Group ${id}`,
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc.`,
+    groupType: 0,
   };
 
   return (
@@ -50,6 +55,17 @@ function GroupDetailPage() {
             <Header size="md">Events History</Header>
             <EventList />
           </div>
+          <div className="flex justify-between">
+            <Button onClick={() => setAddUsersOpen(true)} buttonType="primary">
+              Add users
+            </Button>
+            <Button
+              onClick={() => setLeaveGroupOpen(true)}
+              buttonType="secondary"
+            >
+              Leave Group
+            </Button>
+          </div>
         </div>
         <div className="pl-4">
           <UserList
@@ -58,14 +74,12 @@ function GroupDetailPage() {
                 id: "1",
                 firstName: "John",
                 lastName: "Smith",
-                phoneNumber: "512 829 128",
                 email: "john.smith@gmail.com",
               },
               {
                 id: "2",
                 firstName: "John",
                 lastName: "Smith",
-                phoneNumber: "512 829 821",
                 email: "john.smith2@gmail.com",
               },
             ]}
@@ -73,6 +87,16 @@ function GroupDetailPage() {
         </div>
       </Card>
       <CreateEventModal open={open} onClose={() => setOpen(false)} />
+      <AddUsersModal
+        open={addUsersOpen}
+        onClose={() => setAddUsersOpen(false)}
+        group={group.id}
+      />
+      <ConfirmLeaveGroupModal
+        open={leaveGroupOpen}
+        onClose={() => setLeaveGroupOpen(false)}
+        group={group.id}
+      />
     </PageContainer>
   );
 }
