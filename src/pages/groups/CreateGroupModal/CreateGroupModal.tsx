@@ -1,11 +1,14 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
 import Modal from "../../../components/common/Modal/Modal";
 import ControlledInput from "../../../components/common/ControlledInput/ControlledInput";
-import { CreateGroupForm } from "../types/groups.types";
+import { GroupType } from "../types/groups.types";
 import { createGroupSchema } from "../validators/group.validators";
 import Group from "../../../assets/icons/Group";
 import Header from "../../../components/typography/Header/Header";
+import { useCreateGroupMutation } from "../../../store/services/groups.services";
+import { somethingWentWrongToast } from "../../../utils/toast.utils";
 
 interface Props {
   open: boolean;
@@ -17,13 +20,15 @@ function CreateGroupModal({ open, setOpen }: Props) {
     control,
     formState: { isValid },
     reset,
-  } = useForm<CreateGroupForm>({
+    getValues,
+  } = useForm({
     defaultValues: {
       description: "",
       name: "",
     },
     resolver: yupResolver(createGroupSchema),
   });
+  const [createGroup] = useCreateGroupMutation();
 
   const onClose = () => {
     setOpen(false);
@@ -31,7 +36,20 @@ function CreateGroupModal({ open, setOpen }: Props) {
   };
 
   const onConfirm = () => {
-    onClose();
+    createGroup({
+      ...getValues(),
+      groupType: GroupType.PRIVATE,
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("You've successfully created group!");
+      })
+      .catch(() => {
+        somethingWentWrongToast();
+      })
+      .finally(() => {
+        onClose();
+      });
   };
 
   return (

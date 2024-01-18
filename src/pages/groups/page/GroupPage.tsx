@@ -6,18 +6,17 @@ import {
 } from "../../../components/common/Search/Search";
 import GroupGrid from "../grid/GroupGrid";
 import GroupHeader from "../header/GroupHeader";
-import { Group } from "../types/groups.types";
 import useSearch from "../../../hooks/useSearch";
-
-const groups: Group[] = Array.from({ length: 5 }, (_, i) => ({
-  id: i.toString(),
-  name: `Group ${i}`,
-  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc.`,
-}));
+import { useGroupsQuery } from "../../../store/services/groups.services";
 
 function GroupPage() {
   const { control } = useFormContext<SearchForm>();
   const values = useWatch({ control });
+  const { data: groups } = useGroupsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      data: data ?? [],
+    }),
+  });
   const { data } = useSearch({
     search: values.search!,
     data: groups,
