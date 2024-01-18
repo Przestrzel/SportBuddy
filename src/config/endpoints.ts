@@ -8,6 +8,10 @@ export default {
     index: "/Groups",
     details: "/Groups/:id",
     leave: "/Groups/:id/leave",
+    users: {
+      toInvite: "/Groups/:id/usersToInvite",
+      current: "/Groups/:id/users",
+    },
     matches: {
       history: "/Groups/:id/matches/archived",
       upcoming: "/Groups/:id/matches/upcoming",

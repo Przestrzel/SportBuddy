@@ -3,6 +3,7 @@ import { baseQueryWithAuth } from "../utils/services.utils";
 import endpoints from "../../config/endpoints";
 import { Group } from "../../pages/groups/types/groups.types";
 import { Match } from "../../pages/groups/events/types/events.types";
+import { User } from "../../pages/auth/types/auth.types";
 
 interface GroupId {
   groupId: string;
@@ -14,7 +15,13 @@ interface MatchWithGroupId extends GroupId {
 export const groupsApi = createApi({
   baseQuery: baseQueryWithAuth,
   reducerPath: "groupsApi",
-  tagTypes: ["Groups", "ArchivedMatches", "UpcomingMatches"],
+  tagTypes: [
+    "Groups",
+    "ArchivedMatches",
+    "UpcomingMatches",
+    "Users",
+    "UsersToInvite",
+  ],
   endpoints: (builder) => ({
     groups: builder.query<Group[], void>({
       query: () => ({
@@ -78,6 +85,33 @@ export const groupsApi = createApi({
         invalidatesTags: ["Groups"],
       }),
     }),
+    groupUsersToInvite: builder.query<User[], GroupId>({
+      query: ({ groupId }) => ({
+        url: endpoints.groups.users.toInvite.replace(":id", groupId),
+        method: "GET",
+      }),
+      providesTags: (_, __, { groupId }) => [
+        { type: "UsersToInvite", id: groupId },
+      ],
+    }),
+    groupUsers: builder.query<User[], GroupId>({
+      query: ({ groupId }) => ({
+        url: endpoints.groups.users.current.replace(":id", groupId),
+        method: "GET",
+      }),
+      providesTags: (_, __, { groupId }) => [{ type: "Users", id: groupId }],
+    }),
+    inviteUsers: builder.mutation<void, GroupId & { userIds: string[] }>({
+      query: ({ groupId, userIds }) => ({
+        url: endpoints.groups.users.current.replace(":id", groupId),
+        method: "POST",
+        data: userIds,
+      }),
+      invalidatesTags: (_, __, { groupId }) => [
+        { type: "Users", id: groupId },
+        { type: "UsersToInvite", id: groupId },
+      ],
+    }),
   }),
 });
 
@@ -89,4 +123,7 @@ export const {
   useLeaveGroupMutation,
   useUpcomingMatchesQuery,
   useArchivedMatchesQuery,
+  useGroupUsersQuery,
+  useGroupUsersToInviteQuery,
+  useInviteUsersMutation,
 } = groupsApi;

@@ -1,7 +1,13 @@
 import React from "react";
+import toast from "react-hot-toast";
 import Modal from "../../../../components/common/Modal/Modal";
 import Header from "../../../../components/typography/Header/Header";
 import UserOperationsList from "../../../auth/users/operationsList/UserOperationsList";
+import {
+  useGroupUsersToInviteQuery,
+  useInviteUsersMutation,
+} from "../../../../store/services/groups.services";
+import { somethingWentWrongToast } from "../../../../utils/toast.utils";
 
 interface Props {
   group: string;
@@ -11,36 +17,44 @@ interface Props {
 
 function AddUsersModal({ open, onClose, group }: Props) {
   const [toInvite, setToInvite] = React.useState<string[]>([]);
+  const [inviteUsers] = useInviteUsersMutation();
+  const { users } = useGroupUsersToInviteQuery(
+    { groupId: group },
+    {
+      selectFromResult: ({ data }) => ({
+        users: data ?? [],
+      }),
+    },
+  );
+
+  const onConfirm = () => {
+    inviteUsers({
+      groupId: group,
+      userIds: toInvite,
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("You've successfully invited users!");
+      })
+      .catch(() => {
+        somethingWentWrongToast();
+      })
+      .finally(() => {
+        onClose();
+      });
+  };
+
   return (
     <Modal
       open={open}
       onClose={onClose}
-      onConfirm={onClose}
+      onConfirm={onConfirm}
       confirmDisabled={!toInvite.length}
     >
       <div>
         <Header>Users to invite {toInvite.length}</Header>
         <UserOperationsList
-          users={[
-            {
-              id: "1",
-              firstName: "John",
-              lastName: "Smith",
-              email: "john.smith@gmail.com",
-            },
-            {
-              id: "2",
-              firstName: "John",
-              lastName: "Smith",
-              email: "john.smith@gmail.com",
-            },
-            {
-              id: "3",
-              firstName: "John",
-              lastName: "Smith3",
-              email: "john.smith@gmail.com",
-            },
-          ].filter((user) => !toInvite.includes(user.id))}
+          users={users.filter((user) => !toInvite.includes(user.id))}
           onClick={(id) => setToInvite((prev) => [...prev, id])}
         />
       </div>
