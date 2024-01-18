@@ -12,6 +12,10 @@ interface MatchWithGroupId extends GroupId {
   match: Match;
 }
 
+interface MatchIdWithGroupId extends GroupId {
+  matchId: string;
+}
+
 export const groupsApi = createApi({
   baseQuery: baseQueryWithAuth,
   reducerPath: "groupsApi",
@@ -52,7 +56,6 @@ export const groupsApi = createApi({
         data: match,
       }),
       invalidatesTags: (_, __, { groupId }) => [
-        { type: "ArchivedMatches", id: groupId },
         { type: "UpcomingMatches", id: groupId },
       ],
     }),
@@ -74,10 +77,28 @@ export const groupsApi = createApi({
         { type: "UpcomingMatches", id: groupId },
       ],
     }),
-    // TODO: Handle it
-    // registerToMatch: builder.mutation<void, MatchIdWithGroupId>({
-
-    // }),
+    registerToMatch: builder.mutation<void, MatchIdWithGroupId>({
+      query: ({ groupId, matchId }) => ({
+        url: endpoints.groups.matches.register
+          .replace(":id", groupId)
+          .replace(":matchId", matchId),
+        method: "POST",
+      }),
+      invalidatesTags: (_, __, { groupId }) => [
+        { type: "UpcomingMatches", id: groupId },
+      ],
+    }),
+    leaveMatch: builder.mutation<void, MatchIdWithGroupId>({
+      query: ({ groupId, matchId }) => ({
+        url: endpoints.groups.matches.leave
+          .replace(":id", groupId)
+          .replace(":matchId", matchId),
+        method: "DELETE",
+      }),
+      invalidatesTags: (_, __, { groupId }) => [
+        { type: "UpcomingMatches", id: groupId },
+      ],
+    }),
     leaveGroup: builder.mutation<void, GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.leave.replace(":id", groupId),

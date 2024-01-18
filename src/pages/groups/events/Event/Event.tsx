@@ -14,6 +14,8 @@ interface Props {
 
 function Event({ match }: Props) {
   const { initial, animate, transition } = useAnimation({ mode: "normal" });
+
+  // TODO: Handle to register to a match
   return (
     <motion.div
       initial={initial}
