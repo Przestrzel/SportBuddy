@@ -1,26 +1,48 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
 import Calendar from "../../../../assets/icons/Calendar";
 import ControlledInput from "../../../../components/common/ControlledInput/ControlledInput";
 import Modal from "../../../../components/common/Modal/Modal";
 import Header from "../../../../components/typography/Header/Header";
 import { eventSchema } from "../validators/event.validators";
+import { useCreateMatchMutation } from "../../../../store/services/groups.services";
+import { Match } from "../../events/types/events.types";
+import { somethingWentWrongToast } from "../../../../utils/toast.utils";
 
 interface Props {
+  group: string;
   onClose: () => void;
   open: boolean;
 }
 
-function CreateEventModal({ open, onClose }: Props) {
+function CreateEventModal({ open, onClose, group }: Props) {
   const {
     control,
     formState: { isValid },
+    getValues,
   } = useForm({
     resolver: yupResolver(eventSchema),
   });
+  const [createMatch] = useCreateMatchMutation();
 
   const onConfirm = () => {
-    onClose();
+    createMatch({
+      groupId: group,
+      match: {
+        ...(getValues() as Match),
+      },
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("You've successfully created event!");
+      })
+      .catch(() => {
+        somethingWentWrongToast();
+      })
+      .finally(() => {
+        onClose();
+      });
   };
 
   return (
