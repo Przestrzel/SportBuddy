@@ -7,7 +7,6 @@ import { Match } from "../../pages/groups/events/types/events.types";
 interface GroupId {
   groupId: string;
 }
-
 interface MatchWithGroupId extends GroupId {
   match: Match;
 }
@@ -68,6 +67,10 @@ export const groupsApi = createApi({
         { type: "UpcomingMatches", id: groupId },
       ],
     }),
+    // TODO: Handle it
+    // registerToMatch: builder.mutation<void, MatchIdWithGroupId>({
+
+    // }),
     leaveGroup: builder.mutation<void, GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.leave.replace(":id", groupId),

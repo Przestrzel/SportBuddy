@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 import PageContainer from "../../../../components/common/PageContainer/PageContainer";
 import Breadcrumbs from "../../../../components/common/Breadcrumbs/Breadcrumbs";
 import Card from "../../../../components/common/Card/Card";
 import GroupInfo from "../info/GroupInfo";
-import { Group } from "../../types/groups.types";
 import Header from "../../../../components/typography/Header/Header";
 import Button from "../../../../components/common/Button/Button";
 import PlusFilled from "../../../../assets/icons/PlusFilled";
@@ -14,6 +14,7 @@ import routes from "../../../../config/routes";
 import UserList from "../../../auth/users/list/UserList";
 import AddUsersModal from "../modals/AddUsersModal";
 import ConfirmLeaveGroupModal from "../modals/ConfirmLeaveGroupModal";
+import { useGroupDetailsQuery } from "../../../../store/services/groups.services";
 
 function GroupDetailPage() {
   const { id } = useParams();
@@ -21,15 +22,27 @@ function GroupDetailPage() {
   const [addUsersOpen, setAddUsersOpen] = React.useState(false);
   const [leaveGroupOpen, setLeaveGroupOpen] = React.useState(false);
   const navigate = useNavigate();
-  if (!id) {
-    return navigate(routes.groups);
+  const { data: group, error } = useGroupDetailsQuery(
+    { groupId: id! },
+    { skip: !id },
+  );
+
+  useEffect(() => {
+    if (!id) {
+      navigate(routes.groups);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (error) {
+      navigate(routes.groups);
+      toast.error("You do not have access to this group");
+    }
+  }, [error]);
+
+  if (!group) {
+    return null;
   }
-  const group: Group = {
-    id,
-    name: `Group ${id}`,
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc.`,
-    groupType: 0,
-  };
 
   return (
     <PageContainer className="pt-4 pb-4 flex flex-col gap-4">
