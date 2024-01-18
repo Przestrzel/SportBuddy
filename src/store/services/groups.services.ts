@@ -56,7 +56,7 @@ export const groupsApi = createApi({
         { type: "UpcomingMatches", id: groupId },
       ],
     }),
-    archivedMatches: builder.query<Group, GroupId>({
+    archivedMatches: builder.query<Match[], GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.details.replace(":id", groupId),
         method: "GET",
@@ -65,7 +65,7 @@ export const groupsApi = createApi({
         { type: "ArchivedMatches", id: groupId },
       ],
     }),
-    upcomingMatches: builder.query<Group, GroupId>({
+    upcomingMatches: builder.query<Match[], GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.details.replace(":id", groupId),
         method: "GET",

@@ -10,6 +10,10 @@ import CreateEventModal from "../../modals/CreateEventModal";
 import AddUsersModal from "../../modals/AddUsersModal";
 import ConfirmLeaveGroupModal from "../../modals/ConfirmLeaveGroupModal";
 import UserList from "../../../../auth/users/list/UserList";
+import {
+  useArchivedMatchesQuery,
+  useUpcomingMatchesQuery,
+} from "../../../../../store/services/groups.services";
 
 interface Props {
   group: Group;
@@ -19,6 +23,22 @@ function GroupDetails({ group }: Props) {
   const [open, setOpen] = React.useState(false);
   const [addUsersOpen, setAddUsersOpen] = React.useState(false);
   const [leaveGroupOpen, setLeaveGroupOpen] = React.useState(false);
+  const { upcomingMatches } = useUpcomingMatchesQuery(
+    { groupId: group.id },
+    {
+      selectFromResult: ({ data }) => ({
+        upcomingMatches: data ?? [],
+      }),
+    },
+  );
+  const { archivedMatches } = useArchivedMatchesQuery(
+    { groupId: group.id },
+    {
+      selectFromResult: ({ data }) => ({
+        archivedMatches: data ?? [],
+      }),
+    },
+  );
 
   return (
     <>
@@ -37,15 +57,15 @@ function GroupDetails({ group }: Props) {
                 Create Event
               </Button>
             </Header>
-            <EventList />
+            <EventList matches={upcomingMatches} />
           </div>
           <div className="flex-1">
             <Header size="md">Events History</Header>
-            <EventList />
+            <EventList matches={archivedMatches} />
           </div>
           <div className="flex justify-between">
             <Button onClick={() => setAddUsersOpen(true)} buttonType="primary">
-              Add users
+              Invite users
             </Button>
             <Button
               onClick={() => setLeaveGroupOpen(true)}
