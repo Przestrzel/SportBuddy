@@ -11,12 +11,13 @@ export interface IRegister {
   lastName: string;
   password: string;
   rePassword: string;
+  username: string;
 }
 
 export interface User extends ModelWithId {
   email: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
+  username: string;
 }
 
 export interface AccessToken {

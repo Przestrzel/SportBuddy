@@ -26,7 +26,13 @@ function SignUpForm() {
   const [signUp, { isLoading }] = useSignUpMutation();
 
   const onSubmit = (data: IRegister) => {
-    signUp(data)
+    const registerData = {
+      email: data.email,
+      password: data.password,
+      fullName: `${data.firstName} ${data.lastName}`,
+      username: data.username,
+    };
+    signUp(registerData)
       .unwrap()
       .then((res) => {
         dispatch(authSlice.actions.setToken(res.accessToken));
@@ -53,23 +59,13 @@ function SignUpForm() {
           label="E-mail"
         />
       </div>
-      <div className="flex gap-4">
-        <div>
-          <ControlledInput
-            control={control}
-            name="password"
-            type="password"
-            label="Password"
-          />
-        </div>
-        <div>
-          <ControlledInput
-            control={control}
-            name="rePassword"
-            type="password"
-            label="Repeat password"
-          />
-        </div>
+      <div>
+        <ControlledInput
+          control={control}
+          name="username"
+          type="text"
+          label="Username"
+        />
       </div>
       <div className="flex gap-4">
         <div>
@@ -86,6 +82,24 @@ function SignUpForm() {
             name="lastName"
             type="text"
             label="Last name"
+          />
+        </div>
+      </div>
+      <div className="flex gap-4">
+        <div>
+          <ControlledInput
+            control={control}
+            name="password"
+            type="password"
+            label="Password"
+          />
+        </div>
+        <div>
+          <ControlledInput
+            control={control}
+            name="rePassword"
+            type="password"
+            label="Repeat password"
           />
         </div>
       </div>
