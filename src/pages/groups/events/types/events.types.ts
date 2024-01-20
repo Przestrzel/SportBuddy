@@ -4,10 +4,11 @@ import { MoneyT } from "../../../../types/money";
 import { User } from "../../../auth/types/auth.types";
 
 export type Category = string;
-
+export type FakeDisciplineEnum = number;
 export interface Match extends ModelWithId {
   category: Category;
   date: DateT;
+  discipline: FakeDisciplineEnum;
   end: TimeT;
   fee: MoneyT | undefined;
   limit: number | undefined;

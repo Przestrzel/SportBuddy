@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../../../../../components/common/Card/Card";
-import { Group } from "../../../types/groups.types";
+import { GroupWithDetails } from "../../../types/groups.types";
 import GroupInfo from "../../info/GroupInfo";
 import Header from "../../../../../components/typography/Header/Header";
 import Button from "../../../../../components/common/Button/Button";
@@ -16,7 +16,7 @@ import {
 } from "../../../../../store/services/groups.services";
 
 interface Props {
-  group: Group;
+  group: GroupWithDetails;
 }
 
 function GroupDetails({ group }: Props) {
@@ -76,22 +76,7 @@ function GroupDetails({ group }: Props) {
           </div>
         </div>
         <div className="pl-4">
-          <UserList
-            users={[
-              {
-                id: "1",
-                firstName: "John",
-                lastName: "Smith",
-                email: "john.smith@gmail.com",
-              },
-              {
-                id: "2",
-                firstName: "John",
-                lastName: "Smith",
-                email: "john.smith2@gmail.com",
-              },
-            ]}
-          />
+          <UserList users={group.members} />
         </div>
       </Card>
       <CreateEventModal

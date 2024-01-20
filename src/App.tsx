@@ -29,7 +29,7 @@ function App() {
         .then((res) => {
           dispatch(authSlice.actions.login(res));
           // TODO: Could be a problem with refresh cause probably shouldn't show welcome message.
-          toast.success(`Welcome ${res.firstName} ${res.lastName}!`);
+          toast.success(`Welcome ${res.username}!`);
         });
     }
   }, [accessToken]);

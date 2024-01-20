@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithAuth } from "../utils/services.utils";
 import endpoints from "../../config/endpoints";
-import { Group } from "../../pages/groups/types/groups.types";
+import { Group, GroupWithDetails } from "../../pages/groups/types/groups.types";
 import { Match } from "../../pages/groups/events/types/events.types";
 import { User } from "../../pages/auth/types/auth.types";
 
@@ -34,7 +34,7 @@ export const groupsApi = createApi({
         providesTags: ["Groups"],
       }),
     }),
-    groupDetails: builder.query<Group, GroupId>({
+    groupDetails: builder.query<GroupWithDetails, GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.details.replace(":id", groupId),
         method: "GET",
@@ -78,10 +78,8 @@ export const groupsApi = createApi({
       ],
     }),
     registerToMatch: builder.mutation<void, MatchIdWithGroupId>({
-      query: ({ groupId, matchId }) => ({
-        url: endpoints.groups.matches.register
-          .replace(":id", groupId)
-          .replace(":matchId", matchId),
+      query: ({ matchId }) => ({
+        url: endpoints.matches.register.replace(":matchId", matchId),
         method: "POST",
       }),
       invalidatesTags: (_, __, { groupId }) => [
@@ -89,10 +87,8 @@ export const groupsApi = createApi({
       ],
     }),
     leaveMatch: builder.mutation<void, MatchIdWithGroupId>({
-      query: ({ groupId, matchId }) => ({
-        url: endpoints.groups.matches.leave
-          .replace(":id", groupId)
-          .replace(":matchId", matchId),
+      query: ({ matchId }) => ({
+        url: endpoints.matches.leave.replace(":matchId", matchId),
         method: "DELETE",
       }),
       invalidatesTags: (_, __, { groupId }) => [

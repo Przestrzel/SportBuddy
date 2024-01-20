@@ -3,7 +3,6 @@ export default {
     login: "/Users/sign-in",
     me: "/Users/me",
     signUp: "/Users/sign-up",
-    matches: "/Users/matches",
   },
   groups: {
     index: "/Groups",
@@ -17,8 +16,11 @@ export default {
       history: "/Groups/:id/matches/archived",
       upcoming: "/Groups/:id/matches/upcoming",
       add: "/Groups/:id/matches",
-      register: "/Groups/:id/matches/:matchId/register",
-      leave: "/Groups/:id/matches/:matchId/leave",
     },
+  },
+  matches: {
+    index: "/Matches/matches",
+    register: "/Matches/:matchId/register",
+    leave: "/Matches/:matchId/leave",
   },
 } as const;

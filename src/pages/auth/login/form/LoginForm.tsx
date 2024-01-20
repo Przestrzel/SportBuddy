@@ -11,6 +11,7 @@ import { authSlice } from "../../../../store/slices/auth.slice";
 import LoadingWrapper from "../../../../components/common/LoadingWrapper/LoadingWrapper";
 import { useLoginMutation } from "../../../../store/services/auth.services";
 import { useAppDispatch } from "../../../../store/store";
+import { setAccessToken } from "../../../../utils/accessToken.utils";
 
 function LoginForm() {
   const {
@@ -28,9 +29,10 @@ function LoginForm() {
       .unwrap()
       .then((res) => {
         dispatch(authSlice.actions.setToken(res.accessToken));
+        setAccessToken(res.accessToken);
       })
       .catch(() => {
-        toast.error("Wrong email or password");
+        toast.error("Invalid credentials");
       });
   };
 

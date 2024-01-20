@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import Header from "../../../typography/Header/Header";
 import Calendar from "../../../../assets/icons/Calendar";
 import EventList from "../../../../pages/groups/events/EventList/EventList";
-import { useUserMatchesQuery } from "../../../../store/services/users.services";
+import { useUserMatchesQuery } from "../../../../store/services/matches.services";
 
 interface Props {
   className: string;
