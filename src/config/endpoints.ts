@@ -1,26 +1,26 @@
 export default {
   users: {
-    login: "/Users/sign-in",
-    me: "/Users/me",
-    signUp: "/Users/sign-up",
+    login: "/users/sign-in",
+    me: "/users/me",
+    signUp: "/users",
   },
   groups: {
-    index: "/Groups",
-    details: "/Groups/:id",
-    leave: "/Groups/:id/leave",
+    index: "/groups",
+    details: "/groups/:id",
+    leave: "/groups/:id/leave",
     users: {
-      toInvite: "/Groups/:id/usersToInvite",
-      current: "/Groups/:id/users",
+      toInvite: "/groups/:id/usersToInvite",
+      current: "/groups/:id/users",
     },
     matches: {
-      history: "/Groups/:id/matches/archived",
-      upcoming: "/Groups/:id/matches/upcoming",
-      add: "/Groups/:id/matches",
+      archived: "/groups/:id/matches/archived",
+      upcoming: "/groups/:id/matches/upcoming",
+      add: "/groups/:id/matches",
     },
   },
   matches: {
-    index: "/Matches/matches",
-    register: "/Matches/:matchId/register",
-    leave: "/Matches/:matchId/leave",
+    index: "/matches",
+    register: "/matches/:matchId/register",
+    leave: "/matches/:matchId/leave",
   },
 } as const;

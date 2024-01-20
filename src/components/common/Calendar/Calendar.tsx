@@ -1,11 +1,13 @@
 import dayjs from "dayjs";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import useCalendar from "./hooks/useCalendar";
 import CalendarHeaderCell from "./HeaderCell/CalendarHeaderCell";
 import Card from "../Card/Card";
 import CalendarCell from "./Cell/CalendarCell";
 import CalendarHeader from "./Header/CalendarHeader";
 import CalendarEvents from "./Events/CalendarEvents";
+import { useAppDispatch } from "../../../store/store";
+import { matchesApi } from "../../../store/services/matches.services";
 
 const headers = [
   "Monday",
@@ -21,6 +23,11 @@ function Calendar() {
   const [date, setDate] = React.useState(dayjs().startOf("month"));
   const [selectedDate, setSelectedDate] = React.useState(dayjs());
   const { dates } = useCalendar({ date });
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(matchesApi.util.resetApiState());
+  }, []);
 
   const calendar = useMemo(
     () =>

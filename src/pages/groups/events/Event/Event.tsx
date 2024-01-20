@@ -7,15 +7,16 @@ import Clock from "../../../../assets/icons/Clock";
 import MoneyBill from "../../../../assets/icons/MoneyBill";
 import InfoContainer from "./InfoContainer/InfoContainer";
 import useAnimation from "../../../../hooks/useAnimation";
+import RegisterButton from "./RegisterButton/RegisterButton";
 
 interface Props {
+  canRegister: boolean;
   match: Match;
 }
 
-function Event({ match }: Props) {
+function Event({ match, canRegister }: Props) {
   const { initial, animate, transition } = useAnimation({ mode: "normal" });
 
-  // TODO: Handle to register to a match
   return (
     <motion.div
       initial={initial}
@@ -27,14 +28,17 @@ function Event({ match }: Props) {
       <div className="flex flex-col justify-start gap-4 w-full">
         <div className="flex justify-between items-center">
           <p className="text-base font-medium text-stone-900">{match.name}</p>
-          <div
-            className={`px-2 py-1 rounded-full text-xs font-medium text-white ${
-              match.limit && match.members.length >= match.limit
-                ? "bg-red-500"
-                : "bg-green-500"
-            }`}
-          >
-            {match.members.length} {match.limit ? `/ ${match.limit}` : null}
+          <div className="flex gap-4 items-center">
+            <div
+              className={`px-2 h-6 flex justify-center items-center py-1 rounded-full text-xs font-medium text-white ${
+                match.limit && match.members.length >= match.limit
+                  ? "bg-red-500"
+                  : "bg-green-500"
+              }`}
+            >
+              {match.members.length} {match.limit ? `/ ${match.limit}` : null}
+            </div>
+            {canRegister ? <RegisterButton match={match} /> : null}
           </div>
         </div>
         <div className="flex items-center gap-4">

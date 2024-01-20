@@ -1,18 +1,13 @@
-import { ModelWithId } from "../../../types/common";
-import { User } from "../../auth/types/auth.types";
+import { ModelWithAdminId, ModelWithId } from "../../../types/common";
 
 export enum GroupType {
   PUBLIC,
   PRIVATE,
 }
-export interface Group extends ModelWithId {
+export interface Group extends ModelWithId, ModelWithAdminId {
   description: string;
   groupType: GroupType;
   name: string;
-}
-
-export interface GroupWithDetails extends Group {
-  members: User[];
 }
 
 export type CreateGroupForm = Omit<Group, "id">;

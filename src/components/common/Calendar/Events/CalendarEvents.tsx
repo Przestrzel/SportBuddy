@@ -11,7 +11,7 @@ interface Props {
 
 function CalendarEvents({ date, className }: Props) {
   const { matches } = useUserMatchesQuery(
-    { date },
+    { date: date.format("YYYY-MM-DD") },
     {
       selectFromResult: ({ data }) => ({
         matches: data ?? [],
@@ -25,7 +25,7 @@ function CalendarEvents({ date, className }: Props) {
         <Calendar />
         {date.format("DD MMMM YYYY")}
       </Header>
-      <EventList matches={matches} />
+      <EventList matches={matches} canRegister={false} size={400} />
     </div>
   );
 }

@@ -4,12 +4,14 @@ import { authApi } from "./services/auth.services";
 import { authReducer } from "./slices/auth.slice";
 import { groupsApi } from "./services/groups.services";
 import { usersApi } from "./services/users.services";
+import { matchesApi } from "./services/matches.services";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [groupsApi.reducerPath]: groupsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [matchesApi.reducerPath]: matchesApi.reducer,
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -17,6 +19,7 @@ export const store = configureStore({
       authApi.middleware,
       groupsApi.middleware,
       usersApi.middleware,
+      matchesApi.middleware,
     ),
 });
 

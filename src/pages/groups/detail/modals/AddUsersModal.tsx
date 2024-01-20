@@ -27,6 +27,11 @@ function AddUsersModal({ open, onClose, group }: Props) {
     },
   );
 
+  const onCloseHandle = () => {
+    onClose();
+    setToInvite([]);
+  };
+
   const onConfirm = () => {
     inviteUsers({
       groupId: group,
@@ -36,18 +41,14 @@ function AddUsersModal({ open, onClose, group }: Props) {
       .then(() => {
         toast.success("You've successfully invited users!");
       })
-      .catch(() => {
-        somethingWentWrongToast();
-      })
-      .finally(() => {
-        onClose();
-      });
+      .catch(somethingWentWrongToast)
+      .finally(onCloseHandle);
   };
 
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={onCloseHandle}
       onConfirm={onConfirm}
       confirmDisabled={!toInvite.length}
     >

@@ -44,12 +44,8 @@ function CreateGroupModal({ open, setOpen }: Props) {
       .then(() => {
         toast.success("You've successfully created group!");
       })
-      .catch(() => {
-        somethingWentWrongToast();
-      })
-      .finally(() => {
-        onClose();
-      });
+      .catch(somethingWentWrongToast)
+      .finally(onClose);
   };
 
   return (

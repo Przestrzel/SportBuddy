@@ -1,11 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import dayjs from "dayjs";
 import { baseQueryWithAuth } from "../utils/services.utils";
 import endpoints from "../../config/endpoints";
 import { Match } from "../../pages/groups/events/types/events.types";
 
 interface DateQuery {
-  date: dayjs.Dayjs;
+  date: string;
 }
 
 export const matchesApi = createApi({
@@ -15,13 +14,11 @@ export const matchesApi = createApi({
   endpoints: (builder) => ({
     userMatches: builder.query<Match[], DateQuery>({
       query: ({ date }) => ({
-        url: endpoints.users.me,
+        url: endpoints.matches.index,
         method: "GET",
-        params: { date: date.format("YYYY-MM-DD") },
+        params: { date },
       }),
-      providesTags: (_, __, { date }) => [
-        { type: "UserMatches", id: date.format("YYYY-MM-DD") },
-      ],
+      providesTags: (_, __, { date }) => [{ type: "UserMatches", id: date }],
     }),
   }),
 });

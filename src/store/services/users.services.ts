@@ -9,10 +9,9 @@ export const usersApi = createApi({
   tagTypes: ["UserMatches"],
   endpoints: (builder) => ({
     userInfo: builder.mutation<User, AccessToken>({
-      query: (token) => ({
+      query: () => ({
         url: endpoints.users.me,
         method: "GET",
-        body: token,
       }),
     }),
   }),

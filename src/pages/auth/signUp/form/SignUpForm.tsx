@@ -10,8 +10,7 @@ import { registerSchema } from "../../validators/auth.validators";
 import ControlledInput from "../../../../components/common/ControlledInput/ControlledInput";
 import { useSignUpMutation } from "../../../../store/services/auth.services";
 import LoadingWrapper from "../../../../components/common/LoadingWrapper/LoadingWrapper";
-import { useAppDispatch } from "../../../../store/store";
-import { authSlice } from "../../../../store/slices/auth.slice";
+import { somethingWentWrongToast } from "../../../../utils/toast.utils";
 
 function SignUpForm() {
   const {
@@ -22,7 +21,6 @@ function SignUpForm() {
     resolver: yupResolver(registerSchema),
   });
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [signUp, { isLoading }] = useSignUpMutation();
 
   const onSubmit = (data: IRegister) => {
@@ -34,22 +32,19 @@ function SignUpForm() {
     };
     signUp(registerData)
       .unwrap()
-      .then((res) => {
-        dispatch(authSlice.actions.setToken(res.accessToken));
+      .then(() => {
         toast.success(
           `Successful registration ${data.firstName} ${data.lastName}`,
         );
         navigate(routes.login);
       })
-      .catch(() => {
-        toast.error("Something went wrong! Try again.");
-      });
+      .catch(somethingWentWrongToast);
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-lg flex flex-col gap-2"
+      className="w-full max-w-lg flex flex-col gap-2 h-full"
     >
       <div>
         <ControlledInput

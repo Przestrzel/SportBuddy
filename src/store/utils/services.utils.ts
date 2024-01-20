@@ -6,14 +6,14 @@ import type {
 } from "@reduxjs/toolkit/query";
 import { RootState } from "../store";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const { VITE_API_URL } = import.meta.env;
 
 export const baseQuery: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = (...baseQueryArgs) =>
-  fetchBaseQuery({ baseUrl: API_URL })(...baseQueryArgs);
+  fetchBaseQuery({ baseUrl: VITE_API_URL })(...baseQueryArgs);
 
 export const baseQueryWithAuth: BaseQueryFn<
   string | FetchArgs,
@@ -21,9 +21,10 @@ export const baseQueryWithAuth: BaseQueryFn<
   FetchBaseQueryError
 > = (...baseQueryArgs) =>
   fetchBaseQuery({
-    baseUrl: API_URL,
+    baseUrl: VITE_API_URL,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
+      // Local test headers
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

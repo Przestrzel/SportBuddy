@@ -31,18 +31,15 @@ function CreateEventModal({ open, onClose, group }: Props) {
       groupId: group,
       match: {
         ...(getValues() as Match),
+        discipline: 0,
       },
     })
       .unwrap()
       .then(() => {
         toast.success("You've successfully created event!");
       })
-      .catch(() => {
-        somethingWentWrongToast();
-      })
-      .finally(() => {
-        onClose();
-      });
+      .catch(somethingWentWrongToast)
+      .finally(onClose);
   };
 
   return (
@@ -64,12 +61,6 @@ function CreateEventModal({ open, onClose, group }: Props) {
           control={control}
           name="name"
           label="Name"
-          type="text"
-        />
-        <ControlledInput
-          control={control}
-          name="category"
-          label="Category"
           type="text"
         />
         <div className="flex gap-4">

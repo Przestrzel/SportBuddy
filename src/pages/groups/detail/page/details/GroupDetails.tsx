@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "../../../../../components/common/Card/Card";
-import { GroupWithDetails } from "../../../types/groups.types";
 import GroupInfo from "../../info/GroupInfo";
 import Header from "../../../../../components/typography/Header/Header";
 import Button from "../../../../../components/common/Button/Button";
@@ -12,14 +11,20 @@ import ConfirmLeaveGroupModal from "../../modals/ConfirmLeaveGroupModal";
 import UserList from "../../../../auth/users/list/UserList";
 import {
   useArchivedMatchesQuery,
+  useGroupUsersQuery,
   useUpcomingMatchesQuery,
 } from "../../../../../store/services/groups.services";
+import { Group } from "../../../types/groups.types";
+import { useAppSelector } from "../../../../../store/store";
 
 interface Props {
-  group: GroupWithDetails;
+  group: Group;
 }
 
 function GroupDetails({ group }: Props) {
+  const isAdmin = useAppSelector(
+    (state) => state.auth.user?.id === group.adminId,
+  );
   const [open, setOpen] = React.useState(false);
   const [addUsersOpen, setAddUsersOpen] = React.useState(false);
   const [leaveGroupOpen, setLeaveGroupOpen] = React.useState(false);
@@ -39,6 +44,14 @@ function GroupDetails({ group }: Props) {
       }),
     },
   );
+  const { members } = useGroupUsersQuery(
+    { groupId: group.id },
+    {
+      selectFromResult: ({ data }) => ({
+        members: data ?? [],
+      }),
+    },
+  );
 
   return (
     <>
@@ -46,37 +59,54 @@ function GroupDetails({ group }: Props) {
         <div className="border-r border-gray-200 col-span-3 flex flex-col gap-4 pr-4">
           <GroupInfo group={group} />
           <div className="flex-1">
-            <Header size="md" className="flex justify-between items-center">
+            <Header
+              size="md"
+              className="flex justify-between items-center mb-2"
+            >
               Upcoming Events
-              <Button
-                buttonType="tertiary"
-                className="flex justify-center items-center gap-2"
-                onClick={() => setOpen(true)}
-              >
-                <PlusFilled className="w-6 h-6" />
-                Create Event
-              </Button>
+              {isAdmin ? (
+                <Button
+                  buttonType="tertiary"
+                  className="flex justify-center items-center gap-2"
+                  onClick={() => setOpen(true)}
+                >
+                  <PlusFilled className="w-6 h-6" />
+                  Create Event
+                </Button>
+              ) : null}
             </Header>
-            <EventList matches={upcomingMatches} />
+            <EventList matches={upcomingMatches} canRegister size={240} />
           </div>
           <div className="flex-1">
-            <Header size="md">Events History</Header>
-            <EventList matches={archivedMatches} />
+            <Header size="md" className="mb-2">
+              Events History
+            </Header>
+            <EventList
+              matches={archivedMatches}
+              canRegister={false}
+              size={240}
+            />
           </div>
-          <div className="flex justify-between">
-            <Button onClick={() => setAddUsersOpen(true)} buttonType="primary">
-              Invite users
-            </Button>
-            <Button
-              onClick={() => setLeaveGroupOpen(true)}
-              buttonType="secondary"
-            >
-              Leave Group
-            </Button>
+          <div className="flex justify-end">
+            {isAdmin ? (
+              <Button
+                onClick={() => setAddUsersOpen(true)}
+                buttonType="primary"
+              >
+                Invite users
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setLeaveGroupOpen(true)}
+                buttonType="secondary"
+              >
+                Leave Group
+              </Button>
+            )}
           </div>
         </div>
         <div className="pl-4">
-          <UserList users={group.members} />
+          <UserList users={members} />
         </div>
       </Card>
       <CreateEventModal

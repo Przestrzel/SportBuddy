@@ -12,10 +12,8 @@ import { useGroupsQuery } from "../../../store/services/groups.services";
 function GroupPage() {
   const { control } = useFormContext<SearchForm>();
   const values = useWatch({ control });
-  const { data: groups } = useGroupsQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      data: data ?? [],
-    }),
+  const { groups } = useGroupsQuery(undefined, {
+    selectFromResult: (res) => ({ groups: res.data ?? [] }),
   });
   const { data } = useSearch({
     search: values.search!,

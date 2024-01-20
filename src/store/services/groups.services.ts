@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithAuth } from "../utils/services.utils";
 import endpoints from "../../config/endpoints";
-import { Group, GroupWithDetails } from "../../pages/groups/types/groups.types";
+import { Group } from "../../pages/groups/types/groups.types";
 import { Match } from "../../pages/groups/events/types/events.types";
 import { User } from "../../pages/auth/types/auth.types";
 
@@ -12,7 +12,7 @@ interface MatchWithGroupId extends GroupId {
   match: Match;
 }
 
-interface MatchIdWithGroupId extends GroupId {
+interface MatchId {
   matchId: string;
 }
 
@@ -25,109 +25,117 @@ export const groupsApi = createApi({
     "UpcomingMatches",
     "Users",
     "UsersToInvite",
+    "GroupDetails",
   ],
   endpoints: (builder) => ({
     groups: builder.query<Group[], void>({
       query: () => ({
         url: endpoints.groups.index,
         method: "GET",
-        providesTags: ["Groups"],
       }),
+      providesTags: ["Groups"],
     }),
-    groupDetails: builder.query<GroupWithDetails, GroupId>({
+    groupDetails: builder.query<Group, GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.details.replace(":id", groupId),
         method: "GET",
       }),
-      providesTags: (_, __, { groupId }) => [{ type: "Groups", id: groupId }],
+      providesTags: (_, __, { groupId }) => [
+        { type: "GroupDetails", id: groupId },
+      ],
     }),
-    createGroup: builder.mutation<Group, Omit<Group, "id">>({
+    createGroup: builder.mutation<Group, Omit<Group, "id" | "adminId">>({
       query: (group) => ({
         url: endpoints.groups.index,
         method: "POST",
         body: group,
-        invalidatesTags: ["Groups"],
       }),
+      invalidatesTags: ["Groups"],
     }),
     createMatch: builder.mutation<Match, Omit<MatchWithGroupId, "id">>({
       query: ({ groupId, match }) => ({
         url: endpoints.groups.matches.add.replace(":id", groupId),
         method: "POST",
-        data: match,
+        body: match,
       }),
-      invalidatesTags: (_, __, { groupId }) => [
-        { type: "UpcomingMatches", id: groupId },
-      ],
+      invalidatesTags: ["UpcomingMatches"],
     }),
     archivedMatches: builder.query<Match[], GroupId>({
       query: ({ groupId }) => ({
-        url: endpoints.groups.details.replace(":id", groupId),
+        url: endpoints.groups.matches.archived.replace(":id", groupId),
         method: "GET",
       }),
-      providesTags: (_, __, { groupId }) => [
-        { type: "ArchivedMatches", id: groupId },
-      ],
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({ type: "ArchivedMatches", id }))
+          : ["ArchivedMatches"],
     }),
     upcomingMatches: builder.query<Match[], GroupId>({
       query: ({ groupId }) => ({
-        url: endpoints.groups.details.replace(":id", groupId),
+        url: endpoints.groups.matches.upcoming.replace(":id", groupId),
         method: "GET",
       }),
-      providesTags: (_, __, { groupId }) => [
-        { type: "UpcomingMatches", id: groupId },
-      ],
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({ type: "UpcomingMatches", id }))
+          : ["UpcomingMatches"],
     }),
-    registerToMatch: builder.mutation<void, MatchIdWithGroupId>({
+    registerToMatch: builder.mutation<void, MatchId>({
       query: ({ matchId }) => ({
         url: endpoints.matches.register.replace(":matchId", matchId),
         method: "POST",
       }),
-      invalidatesTags: (_, __, { groupId }) => [
-        { type: "UpcomingMatches", id: groupId },
-      ],
+      invalidatesTags: ["UpcomingMatches"],
     }),
-    leaveMatch: builder.mutation<void, MatchIdWithGroupId>({
+    leaveMatch: builder.mutation<void, MatchId>({
       query: ({ matchId }) => ({
         url: endpoints.matches.leave.replace(":matchId", matchId),
         method: "DELETE",
       }),
-      invalidatesTags: (_, __, { groupId }) => [
-        { type: "UpcomingMatches", id: groupId },
-      ],
+      invalidatesTags: ["UpcomingMatches"],
     }),
     leaveGroup: builder.mutation<void, GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.leave.replace(":id", groupId),
         method: "DELETE",
-        invalidatesTags: ["Groups"],
       }),
+      invalidatesTags: ["Groups", "GroupDetails"],
     }),
     groupUsersToInvite: builder.query<User[], GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.users.toInvite.replace(":id", groupId),
         method: "GET",
       }),
-      providesTags: (_, __, { groupId }) => [
-        { type: "UsersToInvite", id: groupId },
-      ],
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({
+              type: "UsersToInvite",
+              id,
+            }))
+          : ["UsersToInvite"],
     }),
     groupUsers: builder.query<User[], GroupId>({
       query: ({ groupId }) => ({
         url: endpoints.groups.users.current.replace(":id", groupId),
         method: "GET",
       }),
-      providesTags: (_, __, { groupId }) => [{ type: "Users", id: groupId }],
+      providesTags: (result) =>
+        result
+          ? result.map(({ id }) => ({
+              type: "Users",
+              id,
+            }))
+          : ["Users"],
     }),
     inviteUsers: builder.mutation<void, GroupId & { userIds: string[] }>({
       query: ({ groupId, userIds }) => ({
         url: endpoints.groups.users.current.replace(":id", groupId),
         method: "POST",
-        data: userIds,
+        body: {
+          userIds,
+        },
       }),
-      invalidatesTags: (_, __, { groupId }) => [
-        { type: "Users", id: groupId },
-        { type: "UsersToInvite", id: groupId },
-      ],
+      invalidatesTags: ["UsersToInvite", "Users"],
     }),
   }),
 });
@@ -143,4 +151,6 @@ export const {
   useGroupUsersQuery,
   useGroupUsersToInviteQuery,
   useInviteUsersMutation,
+  useRegisterToMatchMutation,
+  useLeaveMatchMutation,
 } = groupsApi;
