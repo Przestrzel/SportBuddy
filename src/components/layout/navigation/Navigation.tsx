@@ -8,6 +8,7 @@ import useAnimation from "../../../hooks/useAnimation";
 import Home from "../../../assets/icons/Home";
 import Group from "../../../assets/icons/Group";
 import Logout from "../../../assets/icons/Logout";
+import { clearAccessToken } from "../../../utils/accessToken.utils";
 
 function ListLink({ to, children }: { children: React.ReactNode; to: string }) {
   const { pathname } = useLocation();
@@ -32,6 +33,7 @@ function Navigation() {
 
   const onLogout = () => {
     dispatch(logout());
+    clearAccessToken();
   };
 
   return (

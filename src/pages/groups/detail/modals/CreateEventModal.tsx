@@ -28,6 +28,7 @@ function CreateEventModal({ open, onClose, group }: Props) {
     resolver: yupResolver(eventSchema),
   });
   const [createMatch] = useCreateMatchMutation();
+  // TODO: Should refetch auto in service
   const { refetch } = useUpcomingMatchesQuery({ groupId: group });
 
   const onConfirm = () => {
