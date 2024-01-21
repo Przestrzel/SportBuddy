@@ -6,7 +6,10 @@ import ControlledInput from "../../../../components/common/ControlledInput/Contr
 import Modal from "../../../../components/common/Modal/Modal";
 import Header from "../../../../components/typography/Header/Header";
 import { eventSchema } from "../validators/event.validators";
-import { useCreateMatchMutation } from "../../../../store/services/groups.services";
+import {
+  useCreateMatchMutation,
+  useUpcomingMatchesQuery,
+} from "../../../../store/services/groups.services";
 import { Match } from "../../events/types/events.types";
 import { somethingWentWrongToast } from "../../../../utils/toast.utils";
 
@@ -25,6 +28,7 @@ function CreateEventModal({ open, onClose, group }: Props) {
     resolver: yupResolver(eventSchema),
   });
   const [createMatch] = useCreateMatchMutation();
+  const { refetch } = useUpcomingMatchesQuery({ groupId: group });
 
   const onConfirm = () => {
     createMatch({
@@ -37,6 +41,7 @@ function CreateEventModal({ open, onClose, group }: Props) {
       .unwrap()
       .then(() => {
         toast.success("You've successfully created event!");
+        refetch();
       })
       .catch(somethingWentWrongToast)
       .finally(onClose);

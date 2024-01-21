@@ -76,9 +76,7 @@ export const groupsApi = createApi({
         method: "GET",
       }),
       providesTags: (result) =>
-        result
-          ? result.map(({ id }) => ({ type: "UpcomingMatches", id }))
-          : ["UpcomingMatches"],
+        result ? result.map(({ id }) => ({ type: "UpcomingMatches", id })) : [],
     }),
     registerToMatch: builder.mutation<void, MatchId>({
       query: ({ matchId }) => ({
